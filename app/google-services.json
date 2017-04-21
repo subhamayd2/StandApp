@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "836942635283",
+    "firebase_url": "https://standapp-165308.firebaseio.com",
+    "project_id": "standapp-165308",
+    "storage_bucket": "standapp-165308.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836942635283:android:07477269d402ab30",
+        "android_client_info": {
+          "package_name": "com.aztechcorps.comedy.standapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836942635283-ej74tjnro4bmnuo70gt2d2gicfmq8jn0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhr4qBHGeQZTcd41hh8mppmyiVbaJruzc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

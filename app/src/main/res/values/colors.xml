@@ -7,6 +7,9 @@
     <color name="tabTextColor">#80ffffff</color>
     <color name="tabSelectedTextColor">#fff</color>
 
+    <color name="textTitle">#555555</color>
+    <color name="textSubTitle">#666666</color>
+
 
     <color name="green">#009688</color>
     <color name="gray">#8c8c8c</color>
