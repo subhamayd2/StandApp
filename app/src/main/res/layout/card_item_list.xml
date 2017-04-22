@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10sp"
     android:layout_gravity="start"
+    android:foreground="?android:selectableItemBackground"
     card_view:cardCornerRadius="2dp"
     card_view:cardUseCompatPadding="false">
 

@@ -2,6 +2,7 @@ package com.aztechcorps.comedy.standapp.Fragment;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,10 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.aztechcorps.comedy.standapp.Adapter.ChannelCardAdapter;
+import com.aztechcorps.comedy.standapp.AllChannelActivity;
 import com.aztechcorps.comedy.standapp.Background.FetchChannelAsync;
 import com.aztechcorps.comedy.standapp.Misc.ChannelCardDetail;
 import com.aztechcorps.comedy.standapp.R;
@@ -49,13 +52,6 @@ public class ChannelFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private RecyclerView mRecyclerView;
-    private ChannelCardAdapter mAdapter;
-    private List<ChannelCardDetail> mList = new ArrayList<>();
-    ArrayList<String> ids = new ArrayList<>();
-    View view;
-    ProgressBar channelSpinner;
-    private int mShortAnimDuration;
 
     private OnFragmentInteractionListener mListener;
 
@@ -86,93 +82,19 @@ public class ChannelFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mShortAnimDuration = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        View view = inflater.inflate(R.layout.fragment_channel, container, false);
 
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference idsRef = database.getReference("channelIds");
-
-
-
-        idsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        Button btn = (Button) view.findViewById(R.id.btn);
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot obj: dataSnapshot.getChildren()){
-                    ids.add(obj.getKey());
-                }
-
-                FetchChannelAsync fetchChannelAsync = new FetchChannelAsync(ChannelFragment.this);
-                fetchChannelAsync.execute(ids);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(), AllChannelActivity.class));
             }
         });
-
-        view = inflater.inflate(R.layout.fragment_channel, container, false);
 
         return view;
     }
 
-    public void setupAdapter(Object obj){
-        try {
-            JSONObject rootObj = new JSONObject(obj.toString());
-            JSONArray items = rootObj.getJSONArray("items");
-            for(int i = 0; i < items.length(); i++){
-                JSONObject itemObj = (JSONObject) items.get(i);
-                JSONObject snippet = itemObj.getJSONObject("snippet");
-                String image = (snippet.getJSONObject("thumbnails")).getJSONObject("medium").getString("url");
-                mList.add(new ChannelCardDetail(snippet.getString("title"), snippet.getString("country"), image));
-            }
-            mRecyclerView = (RecyclerView) view.findViewById(R.id.channelCardList);
-            mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), calculateNoOfColumns(getContext())));
-            mAdapter = new ChannelCardAdapter(getContext(), mList);
-            mRecyclerView.setAdapter(mAdapter);
-            mAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                }
-            });
-
-            crossfade();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void crossfade(){
-        channelSpinner = (ProgressBar) view.findViewById(R.id.channelSpinner);
-        mRecyclerView.setAlpha(0f);
-        mRecyclerView.setVisibility(View.VISIBLE);
-
-        mRecyclerView.animate()
-                .alpha(1f)
-                .setDuration(mShortAnimDuration)
-                .setListener(null);
-
-        channelSpinner.animate()
-                .alpha(0f)
-                .setDuration(mShortAnimDuration)
-                .setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animator) {  }
-
-                    @Override
-                    public void onAnimationEnd(Animator animator) {
-                        channelSpinner.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animator) {  }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animator) { }
-                });
-    }
 
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -214,11 +136,4 @@ public class ChannelFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-
-    public static int calculateNoOfColumns(Context context) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int noOfColumns = (int) (dpWidth / 180);
-        return noOfColumns;
-    }
 }

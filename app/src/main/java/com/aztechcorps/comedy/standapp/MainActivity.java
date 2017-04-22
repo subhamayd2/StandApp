@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private Toolbar toolbar;
     private ViewPager viewPager;
-    private String[] colors = {"Top", "Channels", "Events"};
+    private final int[] colors = {R.color.blueDark, R.color.greenDark, R.color.grayDark};
+    private TabLayout.Tab _tab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                _tab = tab;
                 int colorFrom = ((ColorDrawable) toolbar.getBackground()).getColor();
                 int colorTo = getColorForTab(tab.getPosition());
 
@@ -67,7 +69,8 @@ public class MainActivity extends AppCompatActivity
                         tabLayout.setBackgroundColor(color);
 
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                            getWindow().setStatusBarColor(color);
+                            Log.d("Tabs", "onAnimationUpdate: "+_tab.getPosition());
+                            getWindow().setStatusBarColor(getColorForStatus(_tab.getPosition()));
                         }
                     }
 
@@ -88,6 +91,12 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+    }
+
+    public int getColorForStatus(int position){
+        if (position == 0) return ContextCompat.getColor(this, colors[position]);
+        else if (position == 1) return ContextCompat.getColor(this, colors[position]);
+        else return ContextCompat.getColor(this, colors[position]);
     }
 
     public int getColorForTab(int position) {

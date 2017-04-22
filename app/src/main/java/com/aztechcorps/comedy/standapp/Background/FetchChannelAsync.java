@@ -8,7 +8,9 @@ import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.aztechcorps.comedy.standapp.AllChannelActivity;
 import com.aztechcorps.comedy.standapp.Fragment.ChannelFragment;
+import com.aztechcorps.comedy.standapp.Misc.ApiUrl;
 import com.aztechcorps.comedy.standapp.Misc.YoutubeAPI;
 
 import java.io.BufferedReader;
@@ -21,10 +23,9 @@ import java.util.List;
 
 public class FetchChannelAsync extends AsyncTask<List<String>, Void, Object> {
     private Activity activity;
-    ChannelFragment fragment;
 
-    public FetchChannelAsync(ChannelFragment fragment){
-        this.fragment = fragment;
+    public FetchChannelAsync(AllChannelActivity activity){
+        this.activity = activity;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class FetchChannelAsync extends AsyncTask<List<String>, Void, Object> {
             arr[i] = lists[0].get(i);
         }
         String ids = TextUtils.join(",", arr);
-        String path = String.format("https://www.googleapis.com/youtube/v3/channels?part=snippet&id=%s&key=%s", ids, YoutubeAPI.getAPIkey());
+        String path = String.format(ApiUrl.getChannelUrl(), ids);
 
         try {
             URL url = new URL(path);
@@ -68,7 +69,7 @@ public class FetchChannelAsync extends AsyncTask<List<String>, Void, Object> {
     @Override
     protected void onPostExecute(Object o) {
         super.onPostExecute(o);
-        fragment.setupAdapter(o);;
+        ((AllChannelActivity)activity).setupAdapter(o);
         Log.d("Channel: ", o.toString());
     }
 }
