@@ -18,13 +18,12 @@ import com.aztechcorps.comedy.standapp.Adapter.GravitySnapHelper;
 import com.aztechcorps.comedy.standapp.Adapter.HorizontalListAdapter;
 import com.aztechcorps.comedy.standapp.Adapter.SnapRecyclerAdapter;
 import com.aztechcorps.comedy.standapp.AllChannelActivity;
-<<<<<<< HEAD
 import com.aztechcorps.comedy.standapp.Background.FetchChannelAsync;
 import com.aztechcorps.comedy.standapp.ChannelActivity;
 import com.aztechcorps.comedy.standapp.Misc.ChannelCardDetail;
-=======
+
 import com.aztechcorps.comedy.standapp.Misc.Item;
->>>>>>> origin/master
+
 import com.aztechcorps.comedy.standapp.R;
 
 import java.util.ArrayList;

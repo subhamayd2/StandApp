@@ -3,72 +3,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:padding="0sp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="6">
 
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="182dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
+            android:padding="10dp"
             android:text="Pick of the Week"
-            android:textStyle="bold" />
+            android:layout_weight="5"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="@color/black"/>
 
         <Button
             android:id="@+id/button3"
-            android:layout_width="75dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/textView3"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="33dp"
             android:background="@null"
             android:text="more"
             android:textColor="@color/green"
-            android:textSize="15sp" />
-    </RelativeLayout>
+            android:textSize="13sp" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/horizontal_recycler1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15sp"
+        android:layout_marginBottom="10sp"
+        android:weightSum="6">
 
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="182dp"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
-            android:paddingTop="10dp"
-            android:text="Indian Stand-up"
-            android:textStyle="bold"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_toStartOf="@+id/button4" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="10sp"
+                android:paddingEnd="10sp"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Indian Stand-up" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="10sp"
+                android:paddingEnd="10sp"
+                android:textSize="14sp"
+                android:text="Indian Stand-up" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/button4"
-            android:layout_width="75dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@null"
             android:text="more"
             android:textColor="@color/green"
-            android:layout_marginEnd="33dp"
-            android:textSize="15sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignBottom="@+id/textView4" />
-    </RelativeLayout>
+            android:textSize="13sp" />
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
