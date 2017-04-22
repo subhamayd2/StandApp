@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity
 
         setSupportActionBar(toolbar);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getColorForStatus(0));
+        }
+
         /*for (String color : colors) {
             tabLayout.addTab(tabLayout.newTab().setText(color));
         }*/

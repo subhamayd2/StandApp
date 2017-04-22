@@ -20,7 +20,8 @@
         <activity
             android:name=".AllChannelActivity"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".VideoListActivity"></activity>
+        <activity android:name=".VideoListActivity" />
+        <activity android:name=".ChannelActivity"></activity>
     </application>
 
 </manifest>
