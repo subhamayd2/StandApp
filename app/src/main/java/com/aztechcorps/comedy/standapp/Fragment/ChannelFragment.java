@@ -1,68 +1,73 @@
 package com.aztechcorps.comedy.standapp.Fragment;
 
-import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.util.Log;
+import android.support.v7.widget.SnapHelper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ProgressBar;
-import android.widget.Spinner;
 
-import com.aztechcorps.comedy.standapp.Adapter.ChannelCardAdapter;
+import com.aztechcorps.comedy.standapp.Adapter.GravitySnapHelper;
+import com.aztechcorps.comedy.standapp.Adapter.HorizontalListAdapter;
+import com.aztechcorps.comedy.standapp.Adapter.SnapRecyclerAdapter;
 import com.aztechcorps.comedy.standapp.AllChannelActivity;
+<<<<<<< HEAD
 import com.aztechcorps.comedy.standapp.Background.FetchChannelAsync;
 import com.aztechcorps.comedy.standapp.ChannelActivity;
 import com.aztechcorps.comedy.standapp.Misc.ChannelCardDetail;
+=======
+import com.aztechcorps.comedy.standapp.Misc.Item;
+>>>>>>> origin/master
 import com.aztechcorps.comedy.standapp.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ChannelFragment.OnFragmentInteractionListener} interface
+ * {@link TopFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ChannelFragment#newInstance} factory method to
+ * Use the {@link TopFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ChannelFragment extends Fragment {
-
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-
     private OnFragmentInteractionListener mListener;
+    private RecyclerView horizontalList;
+    private RecyclerView recyclerView;
+    private HorizontalListAdapter horizontalAdapter;
+    private ArrayList<Item> items;
 
     public ChannelFragment() {
         // Required empty public constructor
     }
 
-
-    public static ChannelFragment newInstance(String param1, String param2) {
-        ChannelFragment fragment = new ChannelFragment();
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment TopFragment.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static TopFragment newInstance(String param1, String param2) {
+        TopFragment fragment = new TopFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,10 +87,13 @@ public class ChannelFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View rootview =  inflater.inflate(R.layout.fragment_channel, container, false);
+        horizontalList = (RecyclerView)rootview.findViewById(R.id.horizontal_recycler1);
+        recyclerView = (RecyclerView)rootview.findViewById(R.id.recycler_view);
 
-        View view = inflater.inflate(R.layout.fragment_channel, container, false);
-
-        Button btn = (Button) view.findViewById(R.id.btn);
+        createApps();
+        Button btn = (Button) rootview.findViewById(R.id.button3);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,10 +101,27 @@ public class ChannelFragment extends Fragment {
             }
         });
 
-        return view;
+
+        horizontalList.setHasFixedSize(true);
+
+        //set horizontal LinearLayout as layout manager to creating horizontal list view
+        LinearLayoutManager horizontalManager = new LinearLayoutManager(rootview.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        horizontalList.setLayoutManager(horizontalManager);
+        horizontalAdapter = new HorizontalListAdapter(getActivity());
+        horizontalList.setAdapter(horizontalAdapter);
+
+        //snaphelper
+        SnapHelper snapHelper = new GravitySnapHelper(Gravity.START);
+        snapHelper.attachToRecyclerView(recyclerView);
+
+        // HORIZONTAL for Gravity START/END and VERTICAL for TOP/BOTTOM
+        recyclerView.setLayoutManager(new LinearLayoutManager(rootview.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerView.setHasFixedSize(true);
+
+        SnapRecyclerAdapter adapter = new SnapRecyclerAdapter(rootview.getContext(), items);
+        recyclerView.setAdapter(adapter);
+        return rootview;
     }
-
-
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -121,7 +146,19 @@ public class ChannelFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
+    private void createApps() {
+        items = new ArrayList<>();
+        items.add(new Item("Google+", R.drawable.google_plus));
+        items.add(new Item("Facebook", R.drawable.facebook));
+        items.add(new Item("LinkedIn", R.drawable.linkedin));
+        items.add(new Item("Youtube", R.drawable.youtube));
+        items.add(new Item("Instagram", R.drawable.instagram));
+        items.add(new Item("Skype", R.drawable.skype));
+        items.add(new Item("Twitter", R.drawable.twitter));
+        items.add(new Item("Wikipedia", R.drawable.wikipedia));
+        items.add(new Item("Whats app", R.drawable.what_apps));
+        items.add(new Item("Pokemon Go", R.drawable.pokemon_go));
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -136,5 +173,5 @@ public class ChannelFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-
 }
+
